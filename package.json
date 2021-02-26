@@ -1,0 +1,23 @@
+{
+  "name": "actions",
+  "version": "1.0.0",
+  "description": "A demo repo to see how to use github actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mreinhartGopuff/actions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mreinhartGopuff/actions/issues"
+  },
+  "homepage": "https://github.com/mreinhartGopuff/actions#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

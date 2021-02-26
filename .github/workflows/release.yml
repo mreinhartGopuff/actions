@@ -1,5 +1,5 @@
 name: Bump version
-on: 
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest

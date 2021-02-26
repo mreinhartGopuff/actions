@@ -1,6 +1,6 @@
 {
   "name": "actions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A demo repo to see how to use github actions",
   "main": "index.js",
   "scripts": {

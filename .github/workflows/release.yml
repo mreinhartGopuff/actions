@@ -1,0 +1,39 @@
+name: Bump version
+on: 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+        token: ${{ secrets.GP_REPO_TOKEN }}
+        clean: false
+    - name: yarn
+      run: yarn --frozen-lockfile
+    - name: Generate tsx changelog
+      run: |
+        npx standard-version --skip.tag --skip.commit
+        cp CHANGELOG.md ./Changelog.tsx
+        sed -i"old" '1s/^/export default ` /' ./Changelog.tsx
+        echo '`' >> ./Changelog.tsx
+        npx eslint ./Changelog.tsx --fix
+        rm ./Changelog.tsxold
+        cat ./Changelog.tsx
+        git checkout -- CHANGELOG.md
+        git checkout -- package.json
+    - name: Bump version and push tag
+      id: changelog
+      uses: TriPSs/conventional-changelog-action@v3
+      with:
+        github-token: ${{ secrets.GP_REPO_TOKEN }}
+        git-message: 'chore(release): {version}'
+    - name: Create Release
+      uses: actions/create-release@v1
+      if: ${{ steps.changelog.outputs.skipped == 'false' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.github_token }}
+      with:
+        tag_name: ${{ steps.changelog.outputs.tag }}
+        release_name: ${{ steps.changelog.outputs.tag }}
+        body: ${{ steps.changelog.outputs.clean_changelog }}
